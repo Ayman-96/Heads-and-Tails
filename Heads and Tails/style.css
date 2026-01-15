@@ -1,0 +1,84 @@
+body {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  position: relative;
+  background-color: #ffffffcc;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+/* Pseudo-element for the tracing dashed border */
+button::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 2px dashed transparent;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+button.heads:hover {
+  background-color: #4facfe;
+  color: white;
+}
+
+button.heads:hover::before {
+  border-color: #0f75bc;
+  animation: border-dash 2s linear infinite;
+}
+
+button.tails:hover {
+  background-color: #ff6a6a;
+  color: white;
+}
+
+button.tails:hover::before {
+  border-color: #b00020;
+  animation: border-dash 2s linear infinite;
+}
+
+/* Dashed border tracing animation */
+@keyframes border-dash {
+  0% {
+    border-style: dashed;
+    border-width: 2px;
+    border-radius: 16px;
+    border-color: inherit;
+    clip-path: inset(0 round 16px);
+    border-image: repeating-linear-gradient(to right, currentColor 0 5px, transparent 5px 10px) 1;
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fallback for smoother effect */
+button:hover::before {
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 16px;
+  animation: border-dash 2s linear infinite;
+}

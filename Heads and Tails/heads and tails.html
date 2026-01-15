@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <button
+      class="heads"
+      onclick="
+    guess = 'heads'; playGame(guess,score);
+    "
+    >
+      Heads
+    </button>
+    <button
+      class="tails"
+      onclick="
+  guess = 'tails';  playGame(guess,score);
+  "
+    >
+      Tails
+    </button>
+    <p class="urMove"></p>
+    <p class="js-result"></p>
+
+    <script>
+      let guess = "";
+      let score = JSON.parse(localStorage.getItem("score")) || {
+        wins: 0,
+        losses: 0,
+      };
+      if (typeof score.wins !== "number") score.wins = 0;
+      if (typeof score.losses !== "number") score.losses = 0; // if it got unidenified or NaN
+
+      function playGame(guess, score) {
+        let flipCoin = Math.random();
+        let result = flipCoin > 1 / 2 ? "heads" : "tails";
+        if (guess === result) {
+          document.querySelector(
+            ".urMove"
+          ).innerHTML = `You chose ${guess}, Coin result is ${result}, YOU WON ! `;
+          score.wins++;
+        } else {
+          document.querySelector(
+            ".urMove"
+          ).innerHTML = `You chose ${guess}, Coin result is ${result}, YOU Lost `;
+          score.losses++;
+        }
+
+        document.querySelector(
+          ".js-result"
+        ).innerHTML = `wins: ${score.wins} , Losses: ${score.losses}`;
+        localStorage.setItem("score", JSON.stringify(score)); // need to strngify cuz first it was obj
+      }
+    </script>
+  </body>
+</html>
